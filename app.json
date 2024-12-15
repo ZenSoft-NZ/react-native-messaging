@@ -23,6 +23,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "com.zensoft.reactNativeMessaging",
+    "plugins": ["expo-router"]
   }
 }
