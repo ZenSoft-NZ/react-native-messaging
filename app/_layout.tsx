@@ -4,12 +4,15 @@ import { StyleSheet } from "react-native";
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ChatWrapper } from "../components/chat-wrapper";
 
 export default function Page() {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={styles.container}>
-        <Stack />
+        <ChatWrapper>
+          <Stack />
+        </ChatWrapper>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
