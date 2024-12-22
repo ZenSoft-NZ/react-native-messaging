@@ -1,6 +1,7 @@
+import "react-native-gesture-handler";
 import { Stack } from "expo-router";
 
-export default function Page({ children }) {
+export default function Page() {
   return (
     <Stack
       screenOptions={{
