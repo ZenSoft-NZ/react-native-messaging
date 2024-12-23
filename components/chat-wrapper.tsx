@@ -4,8 +4,8 @@ import {
   chatUserId,
   chatUserName,
   chatUserToken,
-} from "../environment/chat-config";
-import { useCreateChatClient } from "stream-chat-expo";
+} from "environment/chat-config";
+import { Chat, OverlayProvider, useCreateChatClient } from "stream-chat-expo";
 
 const user = {
   id: chatUserId,
@@ -31,5 +31,9 @@ export function ChatWrapper({ children }: ChatWrapperProps) {
     );
   }
 
-  return children;
+  return (
+    <OverlayProvider>
+      <Chat client={chatClient}>{children}</Chat>
+    </OverlayProvider>
+  );
 }
