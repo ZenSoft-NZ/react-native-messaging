@@ -12,7 +12,11 @@ const user = {
   name: chatUserName,
 };
 
-export function ChatWrapper({ children }) {
+type ChatWrapperProps = {
+  children: React.ReactNode;
+};
+
+export function ChatWrapper({ children }: ChatWrapperProps) {
   const chatClient = useCreateChatClient({
     apiKey: chatApiKey,
     userData: user,
