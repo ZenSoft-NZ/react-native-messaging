@@ -1,5 +1,4 @@
-export const chatApiKey =
-  "6zw66syuaem9z8q54es9kygz5fq7j25nemgwurc4erk4vt2qrtxqhgathamk9h75";
+export const chatApiKey = "awv9qgdaawex";
 
 export const chatUserId = "fake-user-1";
 export const chatUserName = "Fake User Kalvin";
