@@ -8,8 +8,8 @@ export const AppContext = createContext({
 });
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [channel, setChannel] = useState<null>();
-  const [thread, useThread] = useState();
+  const [channel, setChannel] = useState<any>();
+  const [thread, setThread] = useState<any>();
 
   return (
     <AppContext.Provider value={{ channel, setChannel, thread, setThread }}>

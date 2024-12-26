@@ -8,7 +8,7 @@ const filters = {
   members: { $in: [chatUserId] },
   type: "messaging",
 };
-const sort = { last_updated: };
+const sort: any = { last_updated: -1 };
 const options = {
   state: true,
   watch: true,
