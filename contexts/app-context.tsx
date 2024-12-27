@@ -1,21 +1,21 @@
 import { createContext, useContext, useState } from "react";
 
-export const AppContext = createContext({
+export const AppChatContext = createContext({
   channel: null,
   setChannel: (channel) => {},
   thread: null,
   setThread: (thread) => {},
 });
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [channel, setChannel] = useState<null>();
-  const [thread, useThread] = useState();
+export function AppChatProvider({ children }: { children: React.ReactNode }) {
+  const [channel, setChannel] = useState<any>();
+  const [thread, setThread] = useState<any>();
 
   return (
-    <AppContext.Provider value={{ channel, setChannel, thread, setThread }}>
+    <AppChatContext.Provider value={{ channel, setChannel, thread, setThread }}>
       {children}
-    </AppContext.Provider>
+    </AppChatContext.Provider>
   );
 }
 
-export const useAppContext = () => useContext(AppContext);
+export const useAppChatContext = () => useContext(AppChatContext);
