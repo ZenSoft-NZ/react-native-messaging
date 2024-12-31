@@ -3,7 +3,7 @@ import { Stack, useRouter } from "expo-router";
 import { useMemo, useContext } from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { ChannelList } from "stream-chat-expo";
-import { useAppChatContext } from "contexts/app-context";
+import { useChatContext } from "contexts/chat-context";
 
 const filters = {
   members: { $in: [chatUserId] },
@@ -15,20 +15,19 @@ const options = {
   watch: true,
 };
 
-export default function ChannelListScreen() {
+export default function MessagesScreen() {
   const memoizedFilters = useMemo(() => filters, []);
 
   const router = useRouter();
-  const { setChannel } = useAppChatContext();
+  const { setChannel } = useChatContext();
 
   const handleChannelSelected = (channel) => {
     setChannel(channel);
-    router.push(`/channel/${channel.cid}`);
+    router.push(`/messages/channel/${channel.cid}`);
   };
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Channel List Screen" }} />
       <ChannelList
         filters={memoizedFilters}
         options={options}
