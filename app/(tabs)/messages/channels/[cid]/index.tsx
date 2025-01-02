@@ -30,7 +30,7 @@ const ChannelScreen = () => {
 
   const handleThreadSelected = (thread) => {
     setThread(thread);
-    router.push(`/messages/channel/${channel.cid}/thread/${thread.cid}`);
+    router.push(`/messages/channels/${channel.cid}/threads/${thread.cid}`);
   };
 
   return (

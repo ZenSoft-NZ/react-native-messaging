@@ -1,9 +1,12 @@
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import Icon from "ui/icon";
 
 export default function TabsLayout() {
+  const pathname = usePathname();
+  const isMessagesRoute = pathname.startsWith("/messages");
+
   return (
-    <Tabs>
+    <Tabs screenOptions={{ headerShown: !isMessagesRoute }}>
       <Tabs.Screen
         name="index"
         options={{

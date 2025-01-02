@@ -5,6 +5,10 @@ export const ChatContext = createContext({
   setChannel: (channel) => {},
   thread: null,
   setThread: (thread) => {},
+  user: { id: "", name: "" },
+  setUser: (user) => {},
+  streamToken: null,
+  setStreamToken: (streamToken) => {},
 });
 
 export function ChatContextProvider({
@@ -12,11 +16,24 @@ export function ChatContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [channel, setChannel] = useState<any>();
-  const [thread, setThread] = useState<any>();
+  const [channel, setChannel] = useState();
+  const [thread, setThread] = useState();
+  const [user, setUser] = useState();
+  const [streamToken, setStreamToken] = useState();
 
   return (
-    <ChatContext.Provider value={{ channel, setChannel, thread, setThread }}>
+    <ChatContext.Provider
+      value={{
+        channel,
+        setChannel,
+        thread,
+        setThread,
+        user,
+        setUser,
+        streamToken,
+        setStreamToken,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   );

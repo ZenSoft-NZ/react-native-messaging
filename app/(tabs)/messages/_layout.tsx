@@ -1,20 +1,30 @@
 import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useChatContext } from "stream-chat-expo";
+import { TouchableOpacity } from "react-native";
+import Icon from "ui/icon";
 
 export default function MessagesLayout() {
-  const { channel } = useChatContext();
   return (
     <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
-        name="channel/[cid]"
+        name="index"
         options={{
           headerShown: true,
+          title: "Messages",
+          headerRight: ({ tintColor }) => (
+            <TouchableOpacity>
+              <Icon name="add-circle-outline" size={24} color={tintColor} />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
-        name="channel/[cid]/threads/[tid]"
+        name="channels/[cid]/index"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="channels/[cid]/threads/[tid]/index"
         options={{ headerShown: false }}
       />
     </Stack>
