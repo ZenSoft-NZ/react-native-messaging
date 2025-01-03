@@ -3,7 +3,15 @@ import { useAuth } from "./auth-context";
 import axios from "axios";
 import getStreamToken from "lib/api/stream-chat";
 
-export const ChatContext = createContext({
+type IChat = {
+  channel: any;
+  setChannel: (channel: any) => void;
+  thread: any;
+  setThread: (thread: any) => void;
+  streamToken: string;
+};
+
+export const ChatContext = createContext<IChat>({
   channel: null,
   setChannel: (channel) => {},
   thread: null,
@@ -21,24 +29,15 @@ export function ChatContextProvider({
   const [channel, setChannel] = useState();
   const [thread, setThread] = useState();
 
-  // useEffect(() => {
-  //   console.log("streamToken in ChatContextProvider", streamToken);
-  //   console.log("accessToken in ChatContextProvider", auth.accessToken);
-  // }, [auth.acccessToken, streamToken]);
-
-  //FIXME: @LinkunGao this is the file to fix
-
   useEffect(() => {
-    console.log("here");
-    async function getToken() {
-      if (auth.accessToken) {
-        const response = await getStreamToken(auth.accessToken);
-        const streamToken = response.data.streamToken;
+    async function getStreamAccessToken() {
+      if (!!auth.accessToken) {
+        const streamToken = await getStreamToken(auth.accessToken);
         setStreamToken(streamToken);
       }
     }
-    getToken();
-  }, [auth.accessToken]);
+    getStreamAccessToken();
+  }, []);
 
   return (
     <ChatContext.Provider

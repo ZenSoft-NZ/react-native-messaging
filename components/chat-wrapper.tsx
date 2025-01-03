@@ -17,10 +17,11 @@ export default function ChatWrapper({ children }: ChatWrapperProps) {
     tokenOrProvider: streamToken,
   });
 
-  if (chatClient)
+  if (chatClient) {
     return (
       <OverlayProvider>
         <Chat client={chatClient}>{children}</Chat>
       </OverlayProvider>
     );
+  }
 }
