@@ -36,7 +36,7 @@ export default function MessagesLayout() {
             name="channels/[cid]/threads/[tid]/index"
             options={{ headerShown: false }}
           />
-        </Stack>{" "}
+        </Stack>
       </ChatWrapper>
     </ChatContextProvider>
   );
