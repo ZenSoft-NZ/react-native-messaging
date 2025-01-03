@@ -14,21 +14,17 @@ const streamServerClient = StreamChat.getInstance(
 );
 
 app.post("/api/get-stream-token", async (req, res) => {
-  const { azureToken } = req.body;
-  console.log("Azure token:", azureToken);
+  const { azureToken: accessToken } = req.body;
 
-  // Verify the Azure AD token (this step is simplified for the example)
   const userInfo = await axios.get("https://graph.microsoft.com/v1.0/me", {
-    headers: { Authorization: `Bearer ${azureToken}` },
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-  const userId = userInfo.data.id;
-  const userName = userInfo.data.displayName;
+  const user = { id: userInfo.data.id, name: userInfo.data.displayName };
 
-  // Generate a Stream Chat token
-  const streamToken = streamServerClient.createToken(userId);
+  const streamToken = streamServerClient.createToken(user.id);
 
-  res.json({ streamToken, userId, userName });
+  res.json({ streamToken, user });
 });
 
 const PORT = process.env.PORT || 3000;

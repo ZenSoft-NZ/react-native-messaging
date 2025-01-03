@@ -1,16 +1,16 @@
-import { chatUserId } from "environment/chat-config";
+import { chatUserId } from "lib/environment/chat-config";
 import { useRouter } from "expo-router";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ChannelList } from "stream-chat-expo";
-import { useChatContext } from "contexts/chat-context";
-import { useAuth } from "contexts/auth-context";
+import { useChatContext } from "lib/contexts/chat-context";
+import { useAuth } from "lib/contexts/auth-context";
 
 export default function MessagesScreen() {
-  const { user } = useAuth();
+  const auth = useAuth();
 
   const filters = {
-    members: { $in: [user.id] },
+    members: { $in: [auth.user.id] },
     type: "messaging",
   };
   const sort: any = { last_updated: -1 };

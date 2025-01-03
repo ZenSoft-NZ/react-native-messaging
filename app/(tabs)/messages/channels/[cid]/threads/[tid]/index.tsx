@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useChatContext } from "contexts/chat-context";
+import { useChatContext } from "lib/contexts/chat-context";
 import { Channel, Thread } from "stream-chat-expo";
 import { useHeaderHeight } from "@react-navigation/elements";
 

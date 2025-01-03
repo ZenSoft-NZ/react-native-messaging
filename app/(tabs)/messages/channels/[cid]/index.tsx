@@ -7,7 +7,7 @@ import {
   MessageList,
   useAttachmentPickerContext,
 } from "stream-chat-expo";
-import { useChatContext } from "contexts/chat-context";
+import { useChatContext } from "lib/contexts/chat-context";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 const ChannelScreen = () => {
