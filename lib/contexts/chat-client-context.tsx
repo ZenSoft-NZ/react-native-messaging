@@ -3,9 +3,10 @@ import { useAuth } from "./auth-context";
 import { useChatContext } from "./chat-context";
 import { useCreateChatClient } from "stream-chat-expo";
 import { chatApiKey } from "lib/environment/chat-config";
+import { StreamChat } from "stream-chat";
 
 type IClientContext = {
-  chatClient: any;
+  chatClient: StreamChat;
 };
 
 export const ChatClientContext = createContext<IClientContext>({
@@ -20,7 +21,7 @@ export function ChatClientContextProvider({
   const auth = useAuth();
   const { streamToken } = useChatContext();
 
-  const chatClient: any = useCreateChatClient({
+  const chatClient: StreamChat = useCreateChatClient({
     apiKey: chatApiKey,
     userData: auth.user,
     tokenOrProvider: streamToken,
