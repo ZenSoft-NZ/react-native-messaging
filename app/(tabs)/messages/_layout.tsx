@@ -41,12 +41,16 @@ export default function MessagesLayout() {
           <Stack.Screen
             name="channels/[cid]/index"
             options={{
-              headerShown: false,
+              headerShown: true,
+              title: "Chat",
             }}
           />
           <Stack.Screen
             name="channels/[cid]/threads/[tid]/index"
-            options={{ headerShown: false }}
+            options={{
+              headerShown: true,
+              title: "Thread",
+            }}
           />
         </Stack>
       </ChatWrapper>
