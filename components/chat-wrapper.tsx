@@ -2,6 +2,7 @@ import { chatApiKey } from "lib/environment/chat-config";
 import { Chat, OverlayProvider, useCreateChatClient } from "stream-chat-expo";
 import { useAuth } from "lib/contexts/auth-context";
 import { useChatContext } from "lib/contexts/chat-context";
+// import chatClient from "lib/api/chatClient";
 
 type ChatWrapperProps = {
   children: React.ReactNode;

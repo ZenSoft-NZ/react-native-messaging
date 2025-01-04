@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./auth-context";
-import axios from "axios";
 import getStreamToken from "lib/api/stream-chat";
 
 type IChat = {
