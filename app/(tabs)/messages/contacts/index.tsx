@@ -9,24 +9,45 @@ import React, { useEffect, useState } from "react";
 import { getAzureADUsers } from "lib/api/contacts";
 import { useAuth } from "lib/contexts/auth-context";
 import Person from "components/ui/person";
+import { chatApiKey } from "lib/environment/chat-config";
+import { useCreateChatClient } from "stream-chat-expo";
+import { useChatContext } from "lib/contexts/chat-context";
+import { useRouter } from "expo-router";
 
 const ContactsScreen = () => {
   const auth = useAuth();
-  const [friends, setFriends] = useState();
+  const router = useRouter();
+  const [contacts, setContacts] = useState();
   const [isLoading, setLoading] = useState(false);
+  const { streamToken, setChannel } = useChatContext();
+
+  const chatClient = useCreateChatClient({
+    apiKey: chatApiKey,
+    userData: auth.user,
+    tokenOrProvider: streamToken,
+  });
 
   useEffect(() => {
     setLoading(true);
-    const getFriends = async () => {
+    const getContacts = async () => {
       const contacts = await getAzureADUsers(auth.accessToken);
-      setFriends(contacts);
+      setContacts(contacts);
       setLoading(false);
     };
-    getFriends();
+    getContacts();
   }, []);
 
-  const handleChatClick = (person: any) => {
-    console.log(person);
+  const handleChatClick = async (person: any) => {
+    // create channel members
+    const members = [auth.user.id, person.id];
+    const channel = chatClient.channel("messaging", {
+      members,
+    });
+
+    await channel.create();
+
+    setChannel(channel);
+    router.push(`/messages/channels/${channel.cid}`);
   };
 
   function renderLoad() {
@@ -43,7 +64,7 @@ const ContactsScreen = () => {
   function renderList() {
     return (
       <FlatList
-        data={friends}
+        data={contacts}
         renderItem={({ item }) => (
           <Person info={item} onPress={() => handleChatClick(item)} />
         )}
