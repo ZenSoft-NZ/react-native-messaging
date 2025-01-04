@@ -1,22 +1,14 @@
 import { chatApiKey } from "lib/environment/chat-config";
 import { Chat, OverlayProvider, useCreateChatClient } from "stream-chat-expo";
 import { useAuth } from "lib/contexts/auth-context";
-import { useChatContext } from "lib/contexts/chat-context";
-// import chatClient from "lib/api/chatClient";
+import { useChatClientContext } from "lib/contexts/chat-client-context";
 
 type ChatWrapperProps = {
   children: React.ReactNode;
 };
 
 export default function ChatWrapper({ children }: ChatWrapperProps) {
-  const auth = useAuth();
-  const { streamToken } = useChatContext();
-
-  const chatClient = useCreateChatClient({
-    apiKey: chatApiKey,
-    userData: auth.user,
-    tokenOrProvider: streamToken,
-  });
+  const { chatClient } = useChatClientContext();
 
   if (chatClient) {
     return (

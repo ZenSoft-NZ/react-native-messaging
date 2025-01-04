@@ -9,23 +9,17 @@ import React, { useEffect, useState } from "react";
 import { getAzureADUsers } from "lib/api/contacts";
 import { useAuth } from "lib/contexts/auth-context";
 import Person from "components/ui/person";
-import { chatApiKey } from "lib/environment/chat-config";
-import { useCreateChatClient } from "stream-chat-expo";
 import { useChatContext } from "lib/contexts/chat-context";
 import { useRouter } from "expo-router";
+import { useChatClientContext } from "lib/contexts/chat-client-context";
 
 const ContactsScreen = () => {
   const auth = useAuth();
   const router = useRouter();
   const [contacts, setContacts] = useState();
   const [isLoading, setLoading] = useState(false);
-  const { streamToken, setChannel } = useChatContext();
-
-  const chatClient = useCreateChatClient({
-    apiKey: chatApiKey,
-    userData: auth.user,
-    tokenOrProvider: streamToken,
-  });
+  const { setChannel } = useChatContext();
+  const { chatClient } = useChatClientContext();
 
   useEffect(() => {
     setLoading(true);

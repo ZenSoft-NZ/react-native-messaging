@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAuth } from "./auth-context";
 import getStreamToken from "lib/api/stream-chat";
 
@@ -27,6 +27,7 @@ export function ChatContextProvider({
   const [streamToken, setStreamToken] = useState("");
   const [channel, setChannel] = useState();
   const [thread, setThread] = useState();
+  let chatClient = null;
 
   useEffect(() => {
     async function getStreamAccessToken() {
