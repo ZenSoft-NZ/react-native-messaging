@@ -1,13 +1,11 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import Icon from "components/ui/icon";
-import { getAzureADUsers } from "lib/api/contacts";
-import { useAuth } from "lib/contexts/auth-context";
 import ChatWrapper from "components/chat-wrapper";
 import { ChatContextProvider } from "lib/contexts/chat-context";
 
 export default function MessagesLayout() {
-  const auth = useAuth();
+  const router = useRouter();
   return (
     <ChatContextProvider>
       <ChatWrapper>
@@ -19,11 +17,25 @@ export default function MessagesLayout() {
               title: "Messages",
               headerRight: ({ tintColor }) => (
                 <TouchableOpacity
-                  onPress={async () => await getAzureADUsers(auth.accessToken)}
+                  onPress={() => router.push(`/messages/contacts`)}
                 >
                   <Icon name="add-circle-outline" size={24} color={tintColor} />
                 </TouchableOpacity>
               ),
+            }}
+          />
+          <Stack.Screen
+            name="contacts/index"
+            options={{
+              headerShown: true,
+              title: "Friends",
+            }}
+          />
+          <Stack.Screen
+            name="contacts/detail"
+            options={{
+              headerShown: true,
+              title: "Details",
             }}
           />
           <Stack.Screen
