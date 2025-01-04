@@ -27,6 +27,16 @@ app.post("/api/get-stream-token", async (req, res) => {
   res.json({ streamToken, user });
 });
 
+// ignore
+app.post("/api/create-stream-channel", async (req, res) => {
+  const { members: members } = req.body;
+  const channel = client.channel("messaging", {
+    members,
+  });
+  await channel.create();
+  res.json({ success: true });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
