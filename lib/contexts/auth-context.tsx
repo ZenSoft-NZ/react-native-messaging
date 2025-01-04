@@ -22,12 +22,12 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     async function authenticate() {
       try {
-        const _auth = await signInWithAzureAD();
+        const auth = await signInWithAzureAD();
 
         setAuth({
           isAuthenticated: true,
-          user: _auth.user,
-          accessToken: _auth.accessToken,
+          user: auth.user,
+          accessToken: auth.accessToken,
         });
       } catch (error) {
         console.error("Error in authenticate: ", error);
