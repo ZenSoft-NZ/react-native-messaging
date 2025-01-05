@@ -17,6 +17,7 @@ export async function signInWithAzureAD() {
     });
 
     const result = await authRequest.promptAsync(discovery);
+
     if (result.type === "success") {
       const accessToken = result.params.access_token;
 
@@ -45,6 +46,7 @@ export async function signInWithAzureAD() {
     }
   } catch (error) {
     console.error("Error in signInWithAzureAD:", error);
+    throw error;
   }
 }
 

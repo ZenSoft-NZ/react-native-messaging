@@ -28,7 +28,7 @@ export function ChatContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const [streamToken, setStreamToken] = useState<string | undefined>();
   const [channel, setChannel] = useState();
   const [thread, setThread] = useState();

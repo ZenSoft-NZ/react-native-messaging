@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import { signInWithAzureAD } from "lib/api/auth/azure";
+import React, { createContext, useState, useContext } from "react";
+import { signInWithAzureAD, signOutWithAzureAD } from "lib/api/auth/azure";
 
 type IAuth =
   | {
@@ -14,29 +14,43 @@ type IAuth =
       accessToken: string;
     };
 
-const AuthContext = createContext<IAuth>({ isAuthenticated: false });
+type AuthContextProps =
+  | {
+      auth: IAuth;
+      signIn: () => Promise<void>;
+      signOut: () => void;
+    }
+  | undefined;
+const AuthContext = createContext<AuthContextProps>(undefined);
 
 export default function AuthProvider({ children }) {
   const [auth, setAuth] = useState<IAuth>({ isAuthenticated: false });
 
-  useEffect(() => {
-    async function authenticate() {
-      try {
-        const auth = await signInWithAzureAD();
-
+  async function signIn() {
+    try {
+      const auth = await signInWithAzureAD();
+      if (auth)
         setAuth({
           isAuthenticated: true,
           user: auth.user,
           accessToken: auth.accessToken,
         });
-      } catch (error) {
-        console.error("Error in authenticate: ", error);
-      }
+    } catch (error) {
+      console.error("Error in signIn", error);
+      throw error;
     }
-    authenticate();
-  }, []);
+  }
 
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+  async function signOut() {
+    signOutWithAzureAD();
+    setAuth({ isAuthenticated: false });
+  }
+
+  return (
+    <AuthContext.Provider value={{ auth, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export const useAuth = () => useContext(AuthContext);

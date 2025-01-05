@@ -7,12 +7,14 @@ import { useChatContext } from "lib/contexts/chat-context";
 import { useAuth } from "lib/contexts/auth-context";
 
 export default function MessagesScreen() {
-  const auth = useAuth();
+  const { auth } = useAuth();
 
-  const filters = {
-    members: { $in: [auth.user.id] },
-    type: "messaging",
-  };
+  const filters = auth.isAuthenticated
+    ? {
+        members: { $in: [auth.user.id] },
+        type: "messaging",
+      }
+    : null;
   const sort: any = { last_updated: -1 };
   const options = {
     state: true,
