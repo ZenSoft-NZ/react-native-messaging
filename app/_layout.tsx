@@ -12,7 +12,7 @@ export default function RootLayout() {
       <GestureHandlerRootView style={styles.container}>
         <AuthProvider>
           <Stack>
-            {/* Below tells Expo to use /(tabs)/_layout.tsx as the content of the screen in the stack */}
+            <Stack.Screen name="login" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
         </AuthProvider>

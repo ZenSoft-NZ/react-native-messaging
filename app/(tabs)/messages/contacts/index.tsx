@@ -13,7 +13,7 @@ import { useChatContext } from "lib/contexts/chat-context";
 import { useRouter } from "expo-router";
 
 const ContactsScreen = () => {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const router = useRouter();
   const [contacts, setContacts] = useState();
   const [isLoading, setLoading] = useState(false);
