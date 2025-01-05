@@ -7,8 +7,11 @@ export async function getAzureADUsers(accessToken: string) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const contacts = response.data.value;
-    return contacts;
+    return response.data.value.map(({ id, displayName, mail }) => ({
+      id,
+      name: displayName,
+      email: mail,
+    }));
   } catch (error) {
     console.error(error);
   }
