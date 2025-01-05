@@ -1,20 +1,17 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
-import Icon from "./icon";
+import Icon from "./ui/icon";
 
-const Person = (props) => {
-  const personInfo = props.info;
+export default function Contact({ contact, onPress }) {
   return (
-    <Pressable onPress={props.onPress}>
+    <Pressable onPress={onPress}>
       <View style={styles.container}>
-        <Text style={styles.title}>{personInfo.displayName}</Text>
+        <Text style={styles.title}>{contact.name}</Text>
         <Icon name="chatbox-ellipses-outline" size={24} color="green" />
       </View>
     </Pressable>
   );
-};
-
-export default Person;
+}
 
 const styles = StyleSheet.create({
   container: {

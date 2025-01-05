@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { getAzureADUsers } from "lib/api/contacts";
 import { useAuth } from "lib/contexts/auth-context";
-import Person from "components/ui/person";
+import Contact from "components/contact";
 import { useChatContext } from "lib/contexts/chat-context";
 import { useRouter } from "expo-router";
 
@@ -61,7 +61,7 @@ const ContactsScreen = () => {
       <FlatList
         data={contacts}
         renderItem={({ item }) => (
-          <Person info={item} onPress={() => handleChatClick(item)} />
+          <Contact contact={item} onPress={() => handleChatClick(item)} />
         )}
       />
     );
