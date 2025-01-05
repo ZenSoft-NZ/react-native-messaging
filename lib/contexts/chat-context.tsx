@@ -1,6 +1,9 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./auth-context";
 import getStreamToken from "lib/api/stream-chat";
+import { type StreamChat } from "stream-chat";
+import { useCreateChatClient } from "stream-chat-expo";
+import { chatApiKey } from "lib/environment/chat-config";
 
 type IChat = {
   channel: any;
@@ -8,6 +11,7 @@ type IChat = {
   thread: any;
   setThread: (thread: any) => void;
   streamToken: string;
+  chatClient: StreamChat;
 };
 
 export const ChatContext = createContext<IChat>({
@@ -16,6 +20,7 @@ export const ChatContext = createContext<IChat>({
   thread: null,
   setThread: (thread) => {},
   streamToken: "",
+  chatClient: null,
 });
 
 export function ChatContextProvider({
@@ -24,20 +29,25 @@ export function ChatContextProvider({
   children: React.ReactNode;
 }) {
   const auth = useAuth();
-  const [streamToken, setStreamToken] = useState("");
+  const [streamToken, setStreamToken] = useState<string | undefined>();
   const [channel, setChannel] = useState();
   const [thread, setThread] = useState();
-  let chatClient = null;
 
   useEffect(() => {
     async function getStreamAccessToken() {
-      if (!!auth.accessToken) {
+      if (auth.isAuthenticated) {
         const streamToken = await getStreamToken(auth.accessToken);
         setStreamToken(streamToken);
       }
     }
     getStreamAccessToken();
-  }, []);
+  }, [auth.isAuthenticated]);
+
+  const chatClient = useCreateChatClient({
+    apiKey: chatApiKey,
+    userData: auth.isAuthenticated ? auth.user : null,
+    tokenOrProvider: streamToken ? streamToken : null,
+  });
 
   return (
     <ChatContext.Provider
@@ -47,6 +57,7 @@ export function ChatContextProvider({
         thread,
         setThread,
         streamToken,
+        chatClient,
       }}
     >
       {children}
