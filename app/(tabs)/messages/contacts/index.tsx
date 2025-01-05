@@ -11,7 +11,7 @@ import { useAuth } from "lib/contexts/auth-context";
 import Contact from "components/contact";
 import { useChatContext } from "lib/contexts/chat-context";
 import { useRouter } from "expo-router";
-
+import { Contact as IContact } from "lib/models/contact";
 const ContactsScreen = () => {
   const auth = useAuth();
   const router = useRouter();
@@ -31,16 +31,15 @@ const ContactsScreen = () => {
     getContacts();
   }, [auth.isAuthenticated]);
 
-  const handleChatClick = async (person) => {
+  const handleChatClick = async (contact: IContact) => {
     if (!auth.isAuthenticated) return;
 
-    const members = [auth.user.id, person.id];
+    const members = [auth.user.id, contact.id];
     const channel = chatClient.channel("messaging", {
       members,
     });
 
     await channel.create();
-
     setChannel(channel);
     router.push(`/messages/channels/${channel.cid}`);
   };
