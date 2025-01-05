@@ -11,28 +11,29 @@ import { useAuth } from "lib/contexts/auth-context";
 import Person from "components/ui/person";
 import { useChatContext } from "lib/contexts/chat-context";
 import { useRouter } from "expo-router";
-import { useChatClientContext } from "lib/contexts/chat-client-context";
 
 const ContactsScreen = () => {
   const auth = useAuth();
   const router = useRouter();
   const [contacts, setContacts] = useState();
   const [isLoading, setLoading] = useState(false);
-  const { setChannel } = useChatContext();
-  const { chatClient } = useChatClientContext();
+  const { setChannel, chatClient } = useChatContext();
 
   useEffect(() => {
     setLoading(true);
     const getContacts = async () => {
-      const contacts = await getAzureADUsers(auth.accessToken);
-      setContacts(contacts);
+      if (auth.isAuthenticated) {
+        const contacts = await getAzureADUsers(auth.accessToken);
+        setContacts(contacts);
+      }
       setLoading(false);
     };
     getContacts();
-  }, []);
+  }, [auth.isAuthenticated]);
 
-  const handleChatClick = async (person: any) => {
-    // create channel members
+  const handleChatClick = async (person) => {
+    if (!auth.isAuthenticated) return;
+
     const members = [auth.user.id, person.id];
     const channel = chatClient.channel("messaging", {
       members,
