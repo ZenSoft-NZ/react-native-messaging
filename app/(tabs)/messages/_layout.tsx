@@ -27,14 +27,14 @@ export default function MessagesLayout() {
             name="contacts/index"
             options={{
               headerShown: true,
-              title: "Friends",
+              title: "Contacts",
             }}
           />
           <Stack.Screen
-            name="contacts/detail"
+            name="contacts/profile"
             options={{
               headerShown: true,
-              title: "Details",
+              title: "Profile",
             }}
           />
           <Stack.Screen
