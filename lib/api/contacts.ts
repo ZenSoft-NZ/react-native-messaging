@@ -8,7 +8,6 @@ export async function getAzureADUsers(accessToken: string) {
       },
     });
     const contacts = response.data.value;
-    console.log("contacts: ", JSON.stringify(contacts, null, 2));
     return contacts;
   } catch (error) {
     console.error(error);

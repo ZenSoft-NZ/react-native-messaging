@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useChatContext } from "lib/contexts/chat-context";
 import { Channel, Thread } from "stream-chat-expo";
@@ -10,9 +10,9 @@ export default function ThreadScreen() {
 
   if (!channel) {
     return (
-      <View>
+      <SafeAreaView>
         <Text>Loading chat</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -21,18 +21,18 @@ export default function ThreadScreen() {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Channel
         channel={channel}
         keyboardVerticalOffset={headerHeight}
         thread={thread}
         threadList
       >
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Thread onThreadDismount={handleThreadDismount} />
-        </View>
+        </SafeAreaView>
       </Channel>
-    </View>
+    </SafeAreaView>
   );
 }
 

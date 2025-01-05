@@ -1,14 +1,23 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { signInWithAzureAD } from "lib/api/auth/azure";
 
-const AuthContext = createContext();
+type IAuth = {
+  isAuthenticated: boolean;
+  user: {
+    id: string;
+    name: string;
+  };
+  accessToken: string;
+};
+
+const AuthContext = createContext<IAuth>({
+  isAuthenticated: false,
+  user: { id: "", name: "" },
+  accessToken: "",
+});
 
 export default function AuthProvider({ children }) {
-  const [auth, setAuth] = useState({
-    isAuthenticated: false,
-    user: { id: "", name: "" },
-    accessToken: "",
-  });
+  const [auth, setAuth] = useState<IAuth>();
 
   useEffect(() => {
     async function authenticate() {

@@ -34,14 +34,14 @@ const ChannelScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {channel && (
         <Channel channel={channel} keyboardVerticalOffset={headerHeight}>
           <MessageList onThreadSelect={handleThreadSelected} />
           <MessageInput />
         </Channel>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
